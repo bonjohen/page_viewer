@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Database Engineering</title>
+  <title>Data Management</title>
   <link rel="stylesheet" href="../../assets/styles/theme.css">
   <link rel="stylesheet" href="../../assets/styles/base.css">
   <link rel="stylesheet" href="./style.css">
@@ -12,21 +12,21 @@
   <div class="container stack">
     <!-- Page Header -->
     <header class="page-header">
-      <h1>Database Engineering</h1>
-      <p class="subtitle">Design, Optimization, and Architecture</p>
+      <h1>Data Management</h1>
+      <p class="subtitle">Governance, Security, and Lifecycle</p>
     </header>
 
     <!-- About This Section -->
     <section class="content-section">
-      <h2>About This Database Engineering</h2>
+      <h2>About This Data Management</h2>
       <p>
-        Database engineering sits at the intersection of data modeling, performance optimization,
-        and system architecture. This space explores database design patterns, query optimization,
-        scalability strategies, and the evolving landscape of data storage technologies.
+        Data management encompasses the practices, policies, and technologies used to manage
+        data as a strategic asset. This includes data governance, metadata management, master
+        data management, data security, and compliance.
       </p>
       <p>
-        From relational databases to NoSQL systems, from ACID transactions to eventual consistency,
-        understanding the trade-offs and choosing the right tool for the job is essential.
+        Effective data management ensures data is accurate, accessible, secure, and compliant
+        with regulations while supporting business objectives and decision-making.
       </p>
     </section>
 
@@ -34,11 +34,10 @@
     <div class="image-placeholder">
       <div class="placeholder-content">
         <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
         </svg>
-        <p>Database Architecture Diagram</p>
+        <p>Data Governance Framework</p>
       </div>
     </div>
 
@@ -47,34 +46,34 @@
       <h2>Focus Areas</h2>
       <div class="focus-grid">
         <div class="focus-card card">
-          <h3>Data Modeling</h3>
+          <h3>Data Governance</h3>
           <p>
-            Schema design, normalization vs. denormalization, entity relationships, 
-            and modeling for different database paradigms (relational, document, graph, key-value).
+            Establishing policies, standards, and processes for data ownership, stewardship,
+            and accountability. Data catalogs, lineage tracking, and governance frameworks.
           </p>
         </div>
 
         <div class="focus-card card">
-          <h3>Query Optimization</h3>
+          <h3>Security & Privacy</h3>
           <p>
-            Index strategies, query planning, execution analysis, performance tuning, 
-            and understanding database internals for efficient data retrieval.
+            Data encryption, access controls, PII protection, GDPR/CCPA compliance,
+            data masking, and implementing security best practices across the data lifecycle.
           </p>
         </div>
 
         <div class="focus-card card">
-          <h3>Scalability & Performance</h3>
+          <h3>Metadata Management</h3>
           <p>
-            Horizontal vs. vertical scaling, sharding strategies, replication, 
-            caching layers, connection pooling, and handling high-throughput workloads.
+            Building and maintaining data catalogs, business glossaries, and metadata repositories.
+            Tools like DataHub, Amundsen, and Alation for data discovery and documentation.
           </p>
         </div>
 
         <div class="focus-card card">
-          <h3>Database Systems</h3>
+          <h3>Data Lifecycle</h3>
           <p>
-            PostgreSQL, MySQL, MongoDB, Redis, Cassandra, DynamoDB, and understanding 
-            when to use SQL vs. NoSQL, ACID vs. BASE, and consistency models.
+            Managing data from creation to archival/deletion. Retention policies, data archiving,
+            backup strategies, and ensuring compliance with regulatory requirements.
           </p>
         </div>
       </div>
@@ -86,8 +85,8 @@
 
       <article class="log-entry">
         <div class="log-header">
-          <h3>Transaction Management & Isolation Levels</h3>
-          <span class="log-date">Fundamentals</span>
+          <h3>Building a Data Catalog</h3>
+          <span class="log-date">Discovery</span>
         </div>
         <div class="image-placeholder small">
           <div class="placeholder-content">
@@ -100,16 +99,16 @@
           </div>
         </div>
         <p>
-          Understanding ACID properties, isolation levels (Read Uncommitted, Read Committed,
-          Repeatable Read, Serializable), and how different databases implement concurrency control.
-          Exploring optimistic vs. pessimistic locking, deadlock detection, and transaction log management.
+          Implementing data catalogs for data discovery and documentation. Automated metadata
+          extraction, lineage tracking, and making data assets searchable and understandable
+          across the organization.
         </p>
       </article>
 
       <article class="log-entry">
         <div class="log-header">
-          <h3>Indexing Strategies & B-Trees</h3>
-          <span class="log-date">Performance</span>
+          <h3>Data Access Controls & Security</h3>
+          <span class="log-date">Security</span>
         </div>
         <div class="image-placeholder small">
           <div class="placeholder-content">
@@ -122,16 +121,16 @@
           </div>
         </div>
         <p>
-          Deep dive into index data structures (B-Trees, B+ Trees, Hash indexes, LSM trees),
-          covering indexes, partial indexes, and understanding when indexes help vs. hurt performance.
-          Query execution plans and index selection strategies.
+          Implementing role-based access control (RBAC), attribute-based access control (ABAC),
+          and fine-grained permissions. Column-level security, row-level security, and audit
+          logging for compliance.
         </p>
       </article>
 
       <article class="log-entry">
         <div class="log-header">
-          <h3>Distributed Databases & CAP Theorem</h3>
-          <span class="log-date">Architecture</span>
+          <h3>GDPR & Privacy Compliance</h3>
+          <span class="log-date">Compliance</span>
         </div>
         <div class="image-placeholder small">
           <div class="placeholder-content">
@@ -144,16 +143,16 @@
           </div>
         </div>
         <p>
-          Exploring the CAP theorem (Consistency, Availability, Partition tolerance),
-          eventual consistency models, consensus algorithms (Raft, Paxos), and how distributed
-          databases like Cassandra, CockroachDB, and Spanner handle these trade-offs.
+          Implementing data privacy regulations: right to be forgotten, data portability,
+          consent management, and PII detection. Building systems that support privacy by design
+          and regulatory compliance.
         </p>
       </article>
 
       <article class="log-entry">
         <div class="log-header">
-          <h3>Database Migration & Schema Evolution</h3>
-          <span class="log-date">Operations</span>
+          <h3>Data Lineage & Impact Analysis</h3>
+          <span class="log-date">Governance</span>
         </div>
         <div class="image-placeholder small">
           <div class="placeholder-content">
@@ -166,9 +165,9 @@
           </div>
         </div>
         <p>
-          Zero-downtime migrations, backward-compatible schema changes, versioning strategies,
-          and tools for managing database evolution in production systems. Blue-green deployments
-          and rolling schema updates.
+          Tracking data lineage from source to consumption. Understanding upstream and downstream
+          dependencies, impact analysis for schema changes, and maintaining data trust through
+          transparency.
         </p>
       </article>
     </section>
@@ -176,8 +175,8 @@
     <!-- Footer Note -->
     <footer class="page-footer">
       <p class="footer-note">
-        This page will be updated with deep dives into database internals, performance case studies,
-        architecture patterns, and explorations of different database systems and their trade-offs.
+        This page will be updated with governance frameworks, security patterns, compliance
+        strategies, and best practices for managing data as a strategic asset.
       </p>
     </footer>
   </div>

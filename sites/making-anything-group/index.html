@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Making Anything</title>
+  <link rel="stylesheet" href="../../assets/styles/theme.css">
+  <link rel="stylesheet" href="../../assets/styles/base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container stack">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Making Anything</h1>
+      <p class="subtitle">Building Capability Through Tools and Craft</p>
+    </header>
+
+    <!-- About This Section -->
+    <section class="content-section">
+      <h2>About This Making Anything</h2>
+      <p>
+        For over 15 years, I've been building the capability to create anything I can imagine.
+        This section documents my maker journey—from digital fabrication to traditional crafts,
+        electronics to chemistry, software to physical objects.
+      </p>
+      <p>
+        The philosophy is simple: acquire tools, learn techniques, build projects, and expand
+        what's possible. Every new capability unlocks new creative possibilities. This is about
+        developing the skills and infrastructure to bring any idea into physical reality.
+      </p>
+    </section>
+
+    <!-- Subsections Overview -->
+    <section class="content-section">
+      <h2>Subsections</h2>
+      <div class="focus-grid">
+        <div class="focus-card clickable-card" data-site-id="maker-projects">
+          <h3>Maker Projects</h3>
+          <p>Building anything with tools, tech, and creativity</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Make subsection cards clickable
+    document.querySelectorAll('.clickable-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const siteId = card.getAttribute('data-site-id');
+        if (siteId && window.parent) {
+          // Send message to parent window to navigate
+          window.parent.postMessage({ type: 'navigate', siteId: siteId }, '*');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

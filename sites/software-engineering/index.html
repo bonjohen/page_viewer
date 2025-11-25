@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Engineering</title>
+  <link rel="stylesheet" href="../../assets/styles/theme.css">
+  <link rel="stylesheet" href="../../assets/styles/base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container stack">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Software Engineering</h1>
+      <p class="subtitle">Building Intelligent Systems and Data Solutions</p>
+    </header>
+
+    <!-- About This Section -->
+    <section class="content-section">
+      <h2>About This Software Engineering</h2>
+      <p>
+        This section encompasses my work in software engineering, with a focus on AI/ML systems,
+        data engineering, and database architecture. From building agentic AI systems to designing
+        robust data pipelines and optimizing database performance, this is where code meets data.
+      </p>
+      <p>
+        The projects here span the full data lifecycle: from collection and storage through
+        processing and analysis to presentation and quality assurance. Each subsection explores
+        a different aspect of modern software and data engineering.
+      </p>
+    </section>
+
+    <!-- Subsections Overview -->
+    <section class="content-section">
+      <h2>Subsections</h2>
+      <div class="focus-grid">
+        <div class="focus-card clickable-card" data-site-id="ai-engineering-journey">
+          <h3>AI Engineering Journey</h3>
+          <p>Agentic AI architectures and experiments</p>
+        </div>
+        <div class="focus-card clickable-card" data-site-id="database-engineering">
+          <h3>Database Engineering</h3>
+          <p>Database design, optimization, and architecture</p>
+        </div>
+        <div class="focus-card clickable-card" data-site-id="data-engineering">
+          <h3>Data Engineering</h3>
+          <p>Building robust data pipelines</p>
+        </div>
+        <div class="focus-card clickable-card" data-site-id="data-management">
+          <h3>Data Management</h3>
+          <p>Governance, security, and lifecycle</p>
+        </div>
+        <div class="focus-card clickable-card" data-site-id="data-presentation">
+          <h3>Data Presentation</h3>
+          <p>Visualization and communication</p>
+        </div>
+        <div class="focus-card clickable-card" data-site-id="data-quality">
+          <h3>Data Quality</h3>
+          <p>Accuracy, completeness, and reliability</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Make subsection cards clickable
+    document.querySelectorAll('.clickable-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const siteId = card.getAttribute('data-site-id');
+        if (siteId && window.parent) {
+          // Send message to parent window to navigate
+          window.parent.postMessage({ type: 'navigate', siteId: siteId }, '*');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

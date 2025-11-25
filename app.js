@@ -34,9 +34,24 @@ async function init() {
     // Restore state from URL or load home page
     const urlParams = new URLSearchParams(window.location.search);
     const siteId = urlParams.get('site');
+    const groupId = urlParams.get('group');
 
     if (siteId) {
-      loadSite(siteId);
+      // Try to load as site first
+      const site = findSiteById(siteId);
+      if (site) {
+        loadSite(siteId);
+      } else {
+        // If not found as site, try as group
+        const group = findGroupById(siteId);
+        if (group) {
+          loadGroup(siteId);
+        } else {
+          loadHomePage();
+        }
+      }
+    } else if (groupId) {
+      loadGroup(groupId);
     } else {
       // Load home page by default
       loadHomePage();
@@ -86,10 +101,19 @@ function createGroupElement(group) {
   groupDiv.className = 'nav-group';
   groupDiv.dataset.groupId = group.id;
 
-  // Group header (non-interactive label)
+  // Group header (now clickable if group has URL)
   const header = document.createElement('div');
   header.className = 'nav-group-header';
   header.innerHTML = `<span>${group.name}</span>`;
+
+  // Make group header clickable if it has a URL
+  if (group.url) {
+    header.classList.add('clickable');
+    header.addEventListener('click', () => {
+      loadGroup(group.id);
+      closeMobileSidebar();
+    });
+  }
 
   // Sites container
   const sitesDiv = document.createElement('div');
@@ -125,34 +149,72 @@ function createSiteElement(site) {
   return siteDiv;
 }
 
+// Load group
+function loadGroup(groupId) {
+  const group = findGroupById(groupId);
+  if (!group || !group.url) return;
+
+  currentSite = null;
+
+  // Update URL
+  const url = new URL(window.location);
+  url.searchParams.set('group', groupId);
+  url.searchParams.delete('site');
+  window.history.pushState({}, '', url);
+
+  // Update UI
+  updateActiveState(null, groupId);
+  currentSiteTitle.textContent = group.name;
+
+  // Hide welcome message
+  welcomeMessage.style.display = 'none';
+
+  // Show open in new tab button
+  openNewTabBtn.style.display = 'block';
+
+  // Load group page
+  loadIframe(group.url);
+}
+
 // Load site
 function loadSite(siteId) {
   const site = findSiteById(siteId);
   if (!site) return;
-  
+
   currentSite = site;
-  
+
   // Update URL
   const url = new URL(window.location);
   url.searchParams.set('site', siteId);
+  url.searchParams.delete('group');
   window.history.pushState({}, '', url);
-  
+
   // Update UI
-  updateActiveState(siteId);
+  updateActiveState(siteId, null);
   currentSiteTitle.textContent = site.label;
-  
+
   // Hide welcome message
   welcomeMessage.style.display = 'none';
-  
+
   // Show/hide open in new tab button
   openNewTabBtn.style.display = 'block';
-  
+
   // Load content
   if (site.embed) {
     loadIframe(site.url);
   } else {
     showFallback(site.url);
   }
+}
+
+// Find group by ID
+function findGroupById(groupId) {
+  for (const group of config.groups) {
+    if (group.id === groupId) {
+      return group;
+    }
+  }
+  return null;
 }
 
 // Find site by ID
@@ -168,15 +230,22 @@ function findSiteById(siteId) {
 }
 
 // Update active state in sidebar
-function updateActiveState(siteId) {
+function updateActiveState(siteId, groupId) {
+  // Clear all active states
   const allSites = document.querySelectorAll('.site-item');
-  allSites.forEach(item => {
-    if (item.dataset.siteId === siteId) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
-    }
-  });
+  const allGroups = document.querySelectorAll('.nav-group-header');
+
+  allSites.forEach(item => item.classList.remove('active'));
+  allGroups.forEach(item => item.classList.remove('active'));
+
+  // Set active state for site or group
+  if (siteId) {
+    const siteEl = document.querySelector(`.site-item[data-site-id="${siteId}"]`);
+    if (siteEl) siteEl.classList.add('active');
+  } else if (groupId) {
+    const groupEl = document.querySelector(`.nav-group[data-group-id="${groupId}"] .nav-group-header`);
+    if (groupEl) groupEl.classList.add('active');
+  }
 }
 
 // Load iframe
@@ -236,6 +305,14 @@ function setupEventListeners() {
       }
     });
   }
+
+  // Listen for navigation messages from iframes
+  window.addEventListener('message', (event) => {
+    // Handle navigation requests from group pages
+    if (event.data && event.data.type === 'navigate' && event.data.siteId) {
+      loadSite(event.data.siteId);
+    }
+  });
 }
 
 // Setup header click handlers (called after sidebar is rendered)

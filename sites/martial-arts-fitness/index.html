@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martial Arts & Fitness</title>
+  <link rel="stylesheet" href="../../assets/styles/theme.css">
+  <link rel="stylesheet" href="../../assets/styles/base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container stack">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Martial Arts & Fitness</h1>
+      <p class="subtitle">Solo Training and Physical Development</p>
+    </header>
+
+    <!-- About This Section -->
+    <section class="content-section">
+      <h2>About This Martial Arts & Fitness</h2>
+      <p>
+        This section documents my journey in martial arts and fitness, with a focus on solo
+        training methodologies. As a solo practitioner, I've developed systems for training
+        without partners, tracking progress, and maintaining consistent practice.
+      </p>
+      <p>
+        From striking drills to conditioning routines, this space explores how to build and
+        maintain martial arts skills through dedicated solo practice and structured training logs.
+      </p>
+    </section>
+
+    <!-- Subsections Overview -->
+    <section class="content-section">
+      <h2>Subsections</h2>
+      <div class="focus-grid">
+        <div class="focus-card clickable-card" data-site-id="solo-martial-artist">
+          <h3>Solo Martial Artist</h3>
+          <p>Solo drills and training logs</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Make subsection cards clickable
+    document.querySelectorAll('.clickable-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const siteId = card.getAttribute('data-site-id');
+        if (siteId && window.parent) {
+          // Send message to parent window to navigate
+          window.parent.postMessage({ type: 'navigate', siteId: siteId }, '*');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

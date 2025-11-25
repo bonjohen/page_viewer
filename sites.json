@@ -4,6 +4,7 @@
     {
       "id": "software-engineering",
       "name": "Software Engineering",
+      "url": "./sites/software-engineering/",
       "sites": [
         {
           "id": "ai-engineering-journey",
@@ -19,12 +20,41 @@
           "description": "Database design, optimization, and architecture.",
           "url": "./sites/database-engineering/",
           "embed": true
+        },
+        {
+          "id": "data-engineering",
+          "label": "Data Engineering",
+          "description": "Building robust data pipelines.",
+          "url": "./sites/data-engineering/",
+          "embed": true
+        },
+        {
+          "id": "data-management",
+          "label": "Data Management",
+          "description": "Governance, security, and lifecycle.",
+          "url": "./sites/data-management/",
+          "embed": true
+        },
+        {
+          "id": "data-presentation",
+          "label": "Data Presentation",
+          "description": "Visualization and communication.",
+          "url": "./sites/data-presentation/",
+          "embed": true
+        },
+        {
+          "id": "data-quality",
+          "label": "Data Quality",
+          "description": "Accuracy, completeness, and reliability.",
+          "url": "./sites/data-quality/",
+          "embed": true
         }
       ]
     },
     {
       "id": "martial-arts-fitness",
       "name": "Martial Arts & Fitness",
+      "url": "./sites/martial-arts-fitness/",
       "sites": [
         {
           "id": "solo-martial-artist",
@@ -38,6 +68,7 @@
     {
       "id": "making-anything",
       "name": "Making Anything",
+      "url": "./sites/making-anything-group/",
       "sites": [
         {
           "id": "maker-projects",
