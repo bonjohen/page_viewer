@@ -9,7 +9,7 @@
           "id": "ai-engineering-journey",
           "label": "AI Engineering Journey",
           "description": "Agentic AI architectures and experiments.",
-          "url": "/ai-agentic/",
+          "url": "./sites/ai-agentic/",
           "embed": true,
           "default": true
         },
@@ -17,7 +17,7 @@
           "id": "database-engineering",
           "label": "Database Engineering",
           "description": "Database design, optimization, and architecture.",
-          "url": "/database-engineering/",
+          "url": "./sites/database-engineering/",
           "embed": true
         }
       ]
@@ -30,7 +30,7 @@
           "id": "solo-martial-artist",
           "label": "Solo Martial Artist",
           "description": "Solo drills and training logs.",
-          "url": "/martial-arts/",
+          "url": "./sites/martial-arts/",
           "embed": true
         }
       ]
@@ -43,7 +43,7 @@
           "id": "maker-projects",
           "label": "Maker Projects",
           "description": "Building anything with tools, tech, and creativity.",
-          "url": "/making-anything/",
+          "url": "./sites/making-anything/",
           "embed": true
         }
       ]

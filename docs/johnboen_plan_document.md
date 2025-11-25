@@ -261,6 +261,7 @@ Include three groups and four sites:
 ### 7.3 Validate Live Deployment
 - Confirm hub loads under custom domain
 - Confirm sub-sites resolve:
+  - `https://johnboen.com/`
   - `https://johnboen.com/ai-agentic/`
   - `https://johnboen.com/martial-arts/`
 

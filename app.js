@@ -22,7 +22,7 @@ const fallbackMessage = document.getElementById('fallback-message');
 async function init() {
   try {
     // Load configuration
-    const response = await fetch('/sites.json');
+    const response = await fetch('./sites.json');
     config = await response.json();
     
     // Render sidebar
@@ -35,15 +35,10 @@ async function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const siteId = urlParams.get('site');
 
-    console.log('URL params:', window.location.search);
-    console.log('Site ID from URL:', siteId);
-
     if (siteId) {
-      console.log('Loading site:', siteId);
       loadSite(siteId);
     } else {
       // Load home page by default
-      console.log('Loading home page');
       loadHomePage();
     }
   } catch (error) {
@@ -53,7 +48,6 @@ async function init() {
 
 // Load home page
 function loadHomePage() {
-  console.log('loadHomePage() called');
   currentSite = null;
 
   // Clear URL parameters
@@ -70,8 +64,7 @@ function loadHomePage() {
   openNewTabBtn.style.display = 'none';
 
   // Load home page in iframe
-  console.log('Loading iframe: /home/');
-  loadIframe('/home/');
+  loadIframe('./sites/home/');
 }
 
 // Render sidebar navigation
@@ -249,10 +242,8 @@ function setupEventListeners() {
 function setupHeaderClickHandlers() {
   // Sidebar header click - load home page
   const sidebarHeader = document.querySelector('.sidebar-header');
-  console.log('Sidebar header element:', sidebarHeader);
   if (sidebarHeader) {
     sidebarHeader.addEventListener('click', () => {
-      console.log('Sidebar header clicked!');
       loadHomePage();
       closeMobileSidebar();
     });
@@ -261,10 +252,8 @@ function setupHeaderClickHandlers() {
 
   // Mobile header title click - load home page
   const mobileTitle = document.querySelector('.mobile-title');
-  console.log('Mobile title element:', mobileTitle);
   if (mobileTitle) {
     mobileTitle.addEventListener('click', () => {
-      console.log('Mobile title clicked!');
       loadHomePage();
     });
     mobileTitle.style.cursor = 'pointer';
