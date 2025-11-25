@@ -2,6 +2,20 @@
   "title": "John Boen – Projects Hub",
   "groups": [
     {
+      "id": "home",
+      "name": "Home",
+      "url": "./sites/home/",
+      "sites": [
+        {
+          "id": "home-page",
+          "label": "Welcome & Updates",
+          "description": "Project hub overview and recent updates.",
+          "url": "./sites/home/",
+          "embed": true
+        }
+      ]
+    },
+    {
       "id": "software-engineering",
       "name": "Software Engineering",
       "url": "./sites/software-engineering/",

@@ -2,9 +2,9 @@ Here is the full detailed design document as plain Markdown text, no embedded co
 
 # Login & Authentication: Detailed Design Document
 
-*Version: 1.0*
-*Date: YYYY-MM-DD*
-*Author: [Your Name]*
+*Version: 2.0*
+*Date: 2025-11-25*
+*Author: John Boen*
 
 ## 1. Purpose & Scope
 
@@ -16,6 +16,14 @@ This document defines the authentication and login / signup functionality for th
 * Login / Signup via common social identity providers (Google, Facebook, LinkedIn).
 * Security- and usability-related requirements.
 * REST API endpoints, data-model, and integration points.
+
+**Implementation Strategy:**
+
+This design supports multiple authentication methods and backend data stores through a modular architecture:
+
+* **Common Components**: Shared REST API interface, authentication logic, token management, and email services that work across all implementations.
+* **Primary Implementation Path**: Standard email/password authentication with AWS backend (DynamoDB + Lambda + API Gateway + SES).
+* **Future Implementations**: Additional authentication methods (social login) and backend options (Azure, Google Cloud, Supabase, Back4App) will be added incrementally.
 
 **Out of scope:**
 
@@ -275,12 +283,106 @@ Behavior: Invalidate session or JWT (if using token blacklist).
 
 ## 10. Configuration & Switchable Backends
 
-Since you intend to support multiple data sources (various DBs/BaaS), design your auth module with abstraction layers:
+Since this system supports multiple data sources and authentication methods, the architecture uses abstraction layers:
 
-* Storage layer interface: e.g., `UserRepository`, `TokenRepository`, with implementations for each backend (Postgres, Firestore, DynamoDB).
-* Token service interface: allow different session/token handling (JWT vs. session DB).
-* OAuth provider config: configurable list of providers in config file, making it easy to add or remove providers.
-* Feature flags/config: email confirmation required? password complexity policy? token expiry times?
+### 10.1 Common Components (Backend-Agnostic)
+
+These components are shared across all implementations:
+
+* **REST API Interface**: Standard HTTP endpoints defined in Section 5 (all backends expose the same API contract).
+* **Authentication Logic**: Password hashing, token generation, email validation, rate limiting.
+* **Email Service Abstraction**: Interface for sending emails (implementations for AWS SES, SendGrid, etc.).
+* **Token Management**: JWT generation/validation, token expiry logic.
+* **Request/Response Models**: Standard JSON schemas for all API endpoints.
+* **Validation Layer**: Input validation, password strength checking, email format validation.
+* **Error Handling**: Standardized error codes and messages.
+
+### 10.2 Backend-Specific Components
+
+These components vary by backend implementation:
+
+* **Storage Layer Interface**: `UserRepository`, `TokenRepository`, `SessionRepository` with implementations for each backend:
+  - **AWS**: DynamoDB tables, Lambda functions, API Gateway
+  - **Azure**: Cosmos DB, Azure Functions, API Management
+  - **Google Cloud**: Firestore, Cloud Functions, Cloud Endpoints
+  - **Supabase**: PostgreSQL with Supabase client SDK
+  - **Back4App**: Parse Server SDK
+* **Infrastructure Configuration**: Deployment scripts, resource definitions (CloudFormation, Terraform, etc.).
+* **Connection Management**: Database clients, connection pooling, credential management.
+
+### 10.3 Configuration Strategy
+
+* **Environment Variables**: Backend selector, database credentials, API keys, OAuth client IDs/secrets.
+* **Feature Flags**: Email confirmation required, password complexity policy, token expiry times, enabled auth providers.
+* **Backend Selector**: Single config variable to switch between implementations (e.g., `AUTH_BACKEND=aws|azure|gcp|supabase|back4app`).
+* **Provider Configuration**: JSON/YAML config file listing enabled OAuth providers with their credentials.
+
+### 10.4 AWS Implementation Details (Primary Path)
+
+The first implementation uses AWS services:
+
+**Infrastructure Components:**
+* **API Gateway**: REST API endpoints with CORS, request validation, rate limiting.
+* **Lambda Functions**: Serverless compute for each auth endpoint (signup, login, confirm, etc.).
+* **DynamoDB Tables**:
+  - `Users`: User records with GSI on email for fast lookup
+  - `EmailConfirmationTokens`: Confirmation tokens with TTL for auto-cleanup
+  - `PasswordResetTokens`: Reset tokens with TTL for auto-cleanup
+  - `Sessions`: Active sessions (if using server-side sessions instead of JWT)
+  - `AuthenticationEvents`: Audit log of auth events
+* **SES (Simple Email Service)**: Email delivery for confirmations and password resets.
+* **Secrets Manager**: Store sensitive configuration (JWT secret, OAuth credentials).
+* **CloudWatch**: Logging and monitoring for Lambda functions.
+* **IAM Roles**: Least-privilege access for Lambda functions to DynamoDB, SES, Secrets Manager.
+
+**DynamoDB Schema Design:**
+
+Users Table:
+- Partition Key: `userId` (UUID)
+- GSI: `email-index` (email as partition key for unique constraint and fast lookup)
+- Attributes: email, emailConfirmed, passwordHash, status, provider, providerId, displayName, avatarUrl, createdAt, updatedAt
+
+EmailConfirmationTokens Table:
+- Partition Key: `token` (hashed token value)
+- TTL Attribute: `expiry` (DynamoDB auto-deletes expired records)
+- Attributes: userId, expiry, used
+
+PasswordResetTokens Table:
+- Partition Key: `token` (hashed token value)
+- TTL Attribute: `expiry`
+- Attributes: userId, expiry, used
+
+Sessions Table (if using server-side sessions):
+- Partition Key: `sessionId`
+- TTL Attribute: `expiry`
+- Attributes: userId, createdAt, expiry, ipAddress, userAgent
+
+AuthenticationEvents Table:
+- Partition Key: `eventId` (UUID)
+- GSI: `userId-timestamp-index` for querying user's auth history
+- Attributes: userId, email, eventType, outcome, timestamp, ipAddress, userAgent
+
+**Lambda Function Organization:**
+- `auth-signup`: Handles POST /api/auth/signup
+- `auth-confirm`: Handles GET /api/auth/confirm
+- `auth-login`: Handles POST /api/auth/login
+- `auth-logout`: Handles POST /api/auth/logout
+- `auth-forgot-password`: Handles POST /api/auth/forgot-password
+- `auth-reset-password`: Handles POST /api/auth/reset-password
+- `auth-providers`: Handles GET /api/auth/providers
+- `auth-oauth-callback`: Handles GET /api/auth/oauth/callback/{provider}
+
+**Shared Lambda Layer:**
+- Common utilities (password hashing, token generation, DynamoDB helpers)
+- Validation functions
+- Error handling utilities
+- JWT utilities
+
+**Cost Optimization:**
+- Use DynamoDB on-demand pricing for low traffic
+- Lambda functions with minimal memory allocation (128-256 MB)
+- SES sandbox mode for development (production requires verification)
+- CloudWatch log retention set to 7-30 days
 
 ## 11. Logging & Analytics
 
@@ -317,8 +419,208 @@ Since you intend to support multiple data sources (various DBs/BaaS), design you
 ## 15. Assumptions
 
 * You will deploy a REST API backend with user-facing frontend (e.g., static site + JS).
-* You will choose a data-store (or support multiple) for users/tokens as per earlier plan.
+* Primary implementation uses AWS services (DynamoDB, Lambda, API Gateway, SES).
 * You will operate over HTTPS and control the domain for email/redirects.
 * You require moderate security suitable for typical web application use.
+* Traffic volume: a few hundred transactions per day (suitable for AWS free tier/low-cost tier).
+* Development will proceed incrementally: email/password auth first, then social login, then additional backends.
+
+## 16. Implementation Phases
+
+### Phase 1: Common Components & AWS Email/Password Auth (Primary Path)
+**Goal**: Implement core authentication with standard email/password login on AWS.
+
+**Deliverables**:
+- REST API specification and common request/response models
+- AWS infrastructure (DynamoDB tables, Lambda functions, API Gateway)
+- Email/password signup with email confirmation
+- Login with session/JWT management
+- Forgot password and reset password flows
+- Email service integration (AWS SES)
+- Rate limiting and security controls
+- Logging and monitoring
+- Unit and integration tests
+
+**Duration**: 4-6 weeks
+
+### Phase 2: Social Login Integration (OAuth Providers)
+**Goal**: Add Google, Facebook, LinkedIn authentication.
+
+**Deliverables**:
+- OAuth provider configuration and credentials
+- Social login Lambda functions
+- Provider callback handling
+- Account linking logic
+- Updated frontend with social login buttons
+- Tests for social login flows
+
+**Duration**: 2-3 weeks
+
+### Phase 3: Additional Backend Implementations
+**Goal**: Implement repository interfaces for other backends.
+
+**Deliverables**:
+- Azure implementation (Cosmos DB + Azure Functions)
+- Google Cloud implementation (Firestore + Cloud Functions)
+- Supabase implementation (PostgreSQL + Supabase SDK)
+- Back4App implementation (Parse Server SDK)
+- Backend switching configuration
+- Cross-backend compatibility tests
+
+**Duration**: 4-6 weeks (can be parallelized)
+
+### Phase 4: Advanced Features
+**Goal**: Add optional enhancements.
+
+**Deliverables**:
+- Multi-factor authentication (TOTP)
+- Remember me functionality
+- Account activity log
+- Admin dashboard for user management
+- Enhanced monitoring and analytics
+
+**Duration**: 3-4 weeks
+
+## 17. Technology Stack (AWS Implementation)
+
+### Backend
+- **Runtime**: Node.js 18.x or Python 3.11 (for Lambda functions)
+- **API Framework**: AWS API Gateway (REST API)
+- **Compute**: AWS Lambda (serverless functions)
+- **Database**: AWS DynamoDB (NoSQL)
+- **Email**: AWS SES (Simple Email Service)
+- **Secrets**: AWS Secrets Manager
+- **Logging**: AWS CloudWatch Logs
+- **Monitoring**: AWS CloudWatch Metrics + Alarms
+
+### Libraries & Dependencies
+- **Password Hashing**: bcrypt or argon2
+- **JWT**: jsonwebtoken (Node.js) or PyJWT (Python)
+- **Validation**: joi or zod (Node.js) or pydantic (Python)
+- **AWS SDK**: aws-sdk v3 (Node.js) or boto3 (Python)
+- **Email Templates**: handlebars or similar templating engine
+- **Testing**: jest (Node.js) or pytest (Python)
+
+### Infrastructure as Code
+- **AWS CloudFormation** or **Terraform** for infrastructure deployment
+- **AWS SAM (Serverless Application Model)** for Lambda deployment
+
+### Frontend (Static Site)
+- **Framework**: Vanilla JS or React
+- **Hosting**: GitHub Pages or AWS S3 + CloudFront
+- **HTTP Client**: fetch API or axios
+- **State Management**: localStorage for JWT storage (or HTTP-only cookies)
+
+### Development Tools
+- **Version Control**: Git + GitHub
+- **CI/CD**: GitHub Actions
+- **API Testing**: Postman or Thunder Client
+- **Local Development**: AWS SAM CLI or LocalStack for local testing
+
+## 18. Security Checklist (AWS-Specific)
+
+- [ ] All Lambda functions use IAM roles with least-privilege permissions
+- [ ] API Gateway has request validation enabled
+- [ ] API Gateway has rate limiting configured (throttling and burst limits)
+- [ ] DynamoDB tables have point-in-time recovery enabled
+- [ ] DynamoDB tables use encryption at rest (AWS managed keys)
+- [ ] Secrets Manager used for all sensitive configuration
+- [ ] CloudWatch Logs retention configured (7-30 days)
+- [ ] SES configured with DKIM and SPF records
+- [ ] SES sandbox mode exited for production (domain verified)
+- [ ] CORS configured properly on API Gateway
+- [ ] HTTPS enforced for all API endpoints
+- [ ] JWT secret stored in Secrets Manager (not environment variables)
+- [ ] Password hashing uses bcrypt with cost factor ≥ 10
+- [ ] Email confirmation tokens expire in 1 hour
+- [ ] Password reset tokens expire in 1 hour
+- [ ] Session/JWT tokens expire in 1 hour (with refresh token option)
+- [ ] Failed login attempts logged to CloudWatch
+- [ ] Rate limiting applied to login, signup, forgot-password endpoints
+- [ ] Input validation on all endpoints
+- [ ] SQL injection not applicable (DynamoDB), but NoSQL injection prevented
+- [ ] XSS prevention in email templates
+- [ ] CSRF protection if using cookies (SameSite attribute)
+
+## 19. Deployment Architecture (AWS)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         Internet                             │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   Amazon Route 53    │
+              │   (DNS)              │
+              └──────────┬───────────┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │   API Gateway        │
+              │   (REST API)         │
+              │   - CORS             │
+              │   - Rate Limiting    │
+              │   - Request Validation│
+              └──────────┬───────────┘
+                         │
+         ┌───────────────┼───────────────┐
+         │               │               │
+         ▼               ▼               ▼
+    ┌────────┐     ┌────────┐     ┌────────┐
+    │Lambda  │     │Lambda  │     │Lambda  │
+    │Signup  │     │Login   │     │Confirm │
+    └───┬────┘     └───┬────┘     └───┬────┘
+        │              │              │
+        └──────────────┼──────────────┘
+                       │
+         ┌─────────────┼─────────────┐
+         │             │             │
+         ▼             ▼             ▼
+    ┌─────────┐  ┌──────────┐  ┌──────────┐
+    │DynamoDB │  │ Secrets  │  │   SES    │
+    │Tables   │  │ Manager  │  │ (Email)  │
+    └─────────┘  └──────────┘  └──────────┘
+         │
+         ▼
+    ┌─────────────────┐
+    │  CloudWatch     │
+    │  Logs & Metrics │
+    └─────────────────┘
+```
+
+## 20. API Gateway Configuration
+
+### Endpoints
+- `POST /api/auth/signup`
+- `GET /api/auth/confirm`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password`
+- `GET /api/auth/providers`
+- `GET /api/auth/oauth/callback/{provider}`
+
+### Throttling Settings
+- **Rate**: 100 requests per second
+- **Burst**: 200 requests
+- **Per-endpoint overrides**: Login and signup limited to 10 requests/second
+
+### CORS Configuration
+```json
+{
+  "allowOrigins": ["https://johnboen.com", "http://localhost:8000"],
+  "allowMethods": ["GET", "POST", "OPTIONS"],
+  "allowHeaders": ["Content-Type", "Authorization"],
+  "exposeHeaders": ["Content-Length"],
+  "maxAge": 3600,
+  "allowCredentials": true
+}
+```
+
+### Request Validation
+- Enable request body validation using JSON Schema models
+- Validate query parameters and path parameters
+- Return 400 Bad Request for invalid inputs before invoking Lambda
 
 
