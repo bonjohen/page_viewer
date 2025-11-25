@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Engineering</title>
+  <link rel="stylesheet" href="/assets/styles/theme.css">
+  <link rel="stylesheet" href="/assets/styles/base.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container stack">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>Database Engineering</h1>
+      <p class="subtitle">Design, Optimization, and Architecture</p>
+    </header>
+
+    <!-- Introduction -->
+    <section class="content-section">
+      <p>
+        Database engineering sits at the intersection of data modeling, performance optimization,
+        and system architecture. This space explores database design patterns, query optimization,
+        scalability strategies, and the evolving landscape of data storage technologies.
+      </p>
+      <p>
+        From relational databases to NoSQL systems, from ACID transactions to eventual consistency,
+        understanding the trade-offs and choosing the right tool for the job is essential.
+      </p>
+    </section>
+
+    <!-- Featured Image Placeholder -->
+    <div class="image-placeholder">
+      <div class="placeholder-content">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        <p>Database Architecture Diagram</p>
+      </div>
+    </div>
+
+    <!-- Focus Areas -->
+    <section class="content-section">
+      <h2>Focus Areas</h2>
+      <div class="focus-grid">
+        <div class="focus-card card">
+          <h3>Data Modeling</h3>
+          <p>
+            Schema design, normalization vs. denormalization, entity relationships, 
+            and modeling for different database paradigms (relational, document, graph, key-value).
+          </p>
+        </div>
+
+        <div class="focus-card card">
+          <h3>Query Optimization</h3>
+          <p>
+            Index strategies, query planning, execution analysis, performance tuning, 
+            and understanding database internals for efficient data retrieval.
+          </p>
+        </div>
+
+        <div class="focus-card card">
+          <h3>Scalability & Performance</h3>
+          <p>
+            Horizontal vs. vertical scaling, sharding strategies, replication, 
+            caching layers, connection pooling, and handling high-throughput workloads.
+          </p>
+        </div>
+
+        <div class="focus-card card">
+          <h3>Database Systems</h3>
+          <p>
+            PostgreSQL, MySQL, MongoDB, Redis, Cassandra, DynamoDB, and understanding 
+            when to use SQL vs. NoSQL, ACID vs. BASE, and consistency models.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Topics & Explorations -->
+    <section class="content-section">
+      <h2>Topics & Explorations</h2>
+
+      <article class="log-entry">
+        <div class="log-header">
+          <h3>Transaction Management & Isolation Levels</h3>
+          <span class="log-date">Fundamentals</span>
+        </div>
+        <div class="image-placeholder small">
+          <div class="placeholder-content">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>Diagram placeholder</p>
+          </div>
+        </div>
+        <p>
+          Understanding ACID properties, isolation levels (Read Uncommitted, Read Committed,
+          Repeatable Read, Serializable), and how different databases implement concurrency control.
+          Exploring optimistic vs. pessimistic locking, deadlock detection, and transaction log management.
+        </p>
+      </article>
+
+      <article class="log-entry">
+        <div class="log-header">
+          <h3>Indexing Strategies & B-Trees</h3>
+          <span class="log-date">Performance</span>
+        </div>
+        <div class="image-placeholder small">
+          <div class="placeholder-content">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>Diagram placeholder</p>
+          </div>
+        </div>
+        <p>
+          Deep dive into index data structures (B-Trees, B+ Trees, Hash indexes, LSM trees),
+          covering indexes, partial indexes, and understanding when indexes help vs. hurt performance.
+          Query execution plans and index selection strategies.
+        </p>
+      </article>
+
+      <article class="log-entry">
+        <div class="log-header">
+          <h3>Distributed Databases & CAP Theorem</h3>
+          <span class="log-date">Architecture</span>
+        </div>
+        <div class="image-placeholder small">
+          <div class="placeholder-content">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>Diagram placeholder</p>
+          </div>
+        </div>
+        <p>
+          Exploring the CAP theorem (Consistency, Availability, Partition tolerance),
+          eventual consistency models, consensus algorithms (Raft, Paxos), and how distributed
+          databases like Cassandra, CockroachDB, and Spanner handle these trade-offs.
+        </p>
+      </article>
+
+      <article class="log-entry">
+        <div class="log-header">
+          <h3>Database Migration & Schema Evolution</h3>
+          <span class="log-date">Operations</span>
+        </div>
+        <div class="image-placeholder small">
+          <div class="placeholder-content">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <p>Diagram placeholder</p>
+          </div>
+        </div>
+        <p>
+          Zero-downtime migrations, backward-compatible schema changes, versioning strategies,
+          and tools for managing database evolution in production systems. Blue-green deployments
+          and rolling schema updates.
+        </p>
+      </article>
+    </section>
+
+    <!-- Footer Note -->
+    <footer class="page-footer">
+      <p class="footer-note">
+        This page will be updated with deep dives into database internals, performance case studies,
+        architecture patterns, and explorations of different database systems and their trade-offs.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
+

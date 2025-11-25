@@ -1,0 +1,53 @@
+{
+  "title": "John Boen – Projects Hub",
+  "groups": [
+    {
+      "id": "software-engineering",
+      "name": "Software Engineering",
+      "sites": [
+        {
+          "id": "ai-engineering-journey",
+          "label": "AI Engineering Journey",
+          "description": "Agentic AI architectures and experiments.",
+          "url": "/ai-agentic/",
+          "embed": true,
+          "default": true
+        },
+        {
+          "id": "database-engineering",
+          "label": "Database Engineering",
+          "description": "Database design, optimization, and architecture.",
+          "url": "/database-engineering/",
+          "embed": true
+        }
+      ]
+    },
+    {
+      "id": "martial-arts-fitness",
+      "name": "Martial Arts & Fitness",
+      "sites": [
+        {
+          "id": "solo-martial-artist",
+          "label": "Solo Martial Artist",
+          "description": "Solo drills and training logs.",
+          "url": "/martial-arts/",
+          "embed": true
+        }
+      ]
+    },
+    {
+      "id": "making-anything",
+      "name": "Making Anything",
+      "sites": [
+        {
+          "id": "maker-projects",
+          "label": "Maker Projects",
+          "description": "Building anything with tools, tech, and creativity.",
+          "url": "/making-anything/",
+          "embed": true
+        }
+      ]
+    }
+  ]
+}
+

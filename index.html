@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="John Boen's Projects Hub - AI Engineering, Martial Arts, and more">
+  <title>John Boen – Projects Hub</title>
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="/assets/styles/theme.css">
+  <link rel="stylesheet" href="/assets/styles/base.css">
+  
+  <!-- Hub Styles -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Hub Script -->
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- Mobile Header with Hamburger -->
+  <header class="mobile-header">
+    <button id="menu-toggle" class="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <h1 class="mobile-title">John Boen</h1>
+  </header>
+
+  <!-- Main Layout Container -->
+  <div class="hub-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1 class="sidebar-title">John Boen</h1>
+        <p class="sidebar-subtitle">Projects Hub</p>
+      </div>
+      
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Navigation will be populated by JavaScript -->
+      </nav>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <h2 class="current-site-title" id="current-site-title">Select a project</h2>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-primary" id="open-new-tab" style="display: none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Open in New Tab
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Pane -->
+      <div class="content-pane">
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Welcome Message (shown when no site selected) -->
+        <div class="welcome-message" id="welcome-message">
+          <h2>Welcome to John Boen's Projects Hub</h2>
+          <p>Select a project from the sidebar to get started.</p>
+        </div>
+
+        <!-- Iframe Container -->
+        <div class="iframe-container" id="iframe-container" style="display: none;">
+          <iframe id="content-iframe" title="Project content"></iframe>
+        </div>
+
+        <!-- Fallback Message (for sites that can't be embedded) -->
+        <div class="fallback-message" id="fallback-message" style="display: none;">
+          <div class="card">
+            <h3>This site cannot be embedded</h3>
+            <p>Some sites prevent embedding for security reasons.</p>
+            <button class="btn btn-primary" id="fallback-open-tab">
+              Open in New Tab
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay for mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+</body>
+</html>
+
