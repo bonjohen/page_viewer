@@ -1,7 +1,96 @@
 # Implementation Plan for Authentication & Login System
-**Version**: 2.0
+**Version**: 2.1
 **Date**: 2025-11-25
 **Prepared by**: John Boen
+
+---
+
+## 🚀 QUICK START: What to Do First
+
+This section identifies the **immediate next steps** for the USER to begin Phase 1 implementation.
+
+### Step 1: AWS Account Setup (USER ACTION REQUIRED)
+
+**If you don't have an AWS account:**
+1. Go to https://aws.amazon.com/
+2. Click "Create an AWS Account"
+3. Follow the signup process (requires credit card, but we'll stay within free tier)
+4. Enable billing alerts to avoid unexpected charges
+
+**If you already have an AWS account:**
+1. Log in to AWS Console: https://console.aws.amazon.com/
+2. Verify you have access to these services:
+   - DynamoDB
+   - Lambda
+   - API Gateway
+   - SES (Simple Email Service)
+   - Secrets Manager
+   - CloudWatch
+3. Set up billing alerts (recommended):
+   - Go to AWS Billing Dashboard
+   - Create a billing alarm for $10/month threshold
+
+### Step 2: AWS CLI Setup (USER ACTION REQUIRED)
+
+1. **Install AWS CLI** (if not already installed):
+   - Windows: Download from https://aws.amazon.com/cli/
+   - Mac: `brew install awscli`
+   - Linux: `sudo apt-get install awscli` or `sudo yum install awscli`
+
+2. **Create IAM User for Deployment**:
+   - Go to AWS Console → IAM → Users → Add User
+   - User name: `auth-system-deployer`
+   - Access type: ✅ Programmatic access
+   - Permissions: Attach policies:
+     - `AWSLambda_FullAccess`
+     - `AmazonDynamoDBFullAccess`
+     - `AmazonAPIGatewayAdministrator`
+     - `AmazonSESFullAccess`
+     - `SecretsManagerReadWrite`
+     - `CloudWatchFullAccess`
+     - `IAMFullAccess` (for creating Lambda execution roles)
+   - Download the **Access Key ID** and **Secret Access Key** (save securely!)
+
+3. **Configure AWS CLI**:
+   ```bash
+   aws configure
+   ```
+   - Enter Access Key ID
+   - Enter Secret Access Key
+   - Default region: `us-east-1` (or your preferred region)
+   - Default output format: `json`
+
+4. **Verify AWS CLI is working**:
+   ```bash
+   aws sts get-caller-identity
+   ```
+   - Should show your account ID and user ARN
+
+### Step 3: Verify Email Address in SES (USER ACTION REQUIRED)
+
+1. Go to AWS Console → SES (Simple Email Service)
+2. Click "Email Addresses" → "Verify a New Email Address"
+3. Enter your email address (e.g., `noreply@yourdomain.com` or your personal email)
+4. Check your inbox and click the verification link
+5. Wait for status to show "verified"
+
+**Note**: In sandbox mode, you can only send emails to verified addresses. For production, you'll need to request production access.
+
+### Step 4: Tell AI You're Ready (USER ACTION)
+
+Once you've completed Steps 1-3, tell the AI:
+
+> "I've completed AWS setup. My AWS CLI is configured, and I've verified my email address in SES. Please proceed with generating the project structure and infrastructure code."
+
+The AI will then:
+- ✅ Generate folder structure
+- ✅ Create CloudFormation/Terraform templates
+- ✅ Generate Lambda function code
+- ✅ Create API Gateway configuration
+- ✅ Generate deployment scripts
+- ✅ Provide step-by-step deployment instructions
+
+---
 
 ## 1. Project Overview
 ### 1.1 Objective
@@ -70,17 +159,137 @@ This phased approach allows for incremental delivery, with common components bui
 - Backend can be switched via configuration
 - All backends pass the same test suite
 
-## 2. Roles & Responsibilities
+## 2. Task Ownership: USER vs AI
+
+This section clarifies which tasks require **USER action** (manual setup, account creation, approvals) versus **AI action** (code generation, documentation, testing).
+
+### 2.1 USER Tasks (Require Manual Action)
+
+**M1: Environment & AWS Infrastructure Setup**
+- [ ] **USER**: Create AWS account (if not already exists)
+- [ ] **USER**: Set up billing and enable AWS services (DynamoDB, Lambda, API Gateway, SES, Secrets Manager, CloudWatch)
+- [ ] **USER**: Create IAM user for deployment with programmatic access
+- [ ] **USER**: Configure AWS CLI with credentials (`aws configure`)
+- [ ] **USER**: Verify sender email address in AWS SES (for development)
+- [ ] **USER**: Review and approve folder structure proposed by AI
+- [ ] **USER**: Review and approve infrastructure templates before deployment
+- [ ] **USER**: Execute deployment commands to AWS (after AI generates them)
+- [ ] **USER**: Set up GitHub repository secrets for CI/CD (AWS credentials)
+
+**M4: Email/Password Signup & Confirmation Flow**
+- [ ] **USER**: Verify sender email in AWS SES console
+- [ ] **USER**: Test email delivery by checking inbox
+- [ ] **USER**: Request SES sandbox exit (if needed for production)
+
+**M7: Security Hardening, Logging & Monitoring**
+- [ ] **USER**: Review security audit findings
+- [ ] **USER**: Approve security configurations
+- [ ] **USER**: Set up CloudWatch alarm notifications (email/SMS)
+
+**M9: Frontend Integration & E2E Testing**
+- [ ] **USER**: Review frontend UI/UX designs
+- [ ] **USER**: Test frontend flows manually in browser
+- [ ] **USER**: Provide feedback on user experience
+
+**M10: Documentation & Production Deployment**
+- [ ] **USER**: Review all documentation for accuracy
+- [ ] **USER**: Approve production deployment
+- [ ] **USER**: Execute production deployment commands
+- [ ] **USER**: Verify domain configuration (if using custom domain)
+- [ ] **USER**: Request SES production access (exit sandbox mode)
+- [ ] **USER**: Conduct final production readiness review
+
+**Phase 2 (Future)**
+- [ ] **USER**: Create OAuth apps at Google, Facebook, LinkedIn developer consoles
+- [ ] **USER**: Configure OAuth redirect URIs
+- [ ] **USER**: Store OAuth credentials in AWS Secrets Manager
+
+**Phase 3 (Future)**
+- [ ] **USER**: Create accounts for Azure, Google Cloud, Supabase, Back4App
+- [ ] **USER**: Set up billing for additional cloud providers
+
+### 2.2 AI Tasks (Automated Code Generation)
+
+**M1: Environment & AWS Infrastructure Setup**
+- [ ] **AI**: Generate folder structure for project
+- [ ] **AI**: Create CloudFormation/Terraform templates for infrastructure
+- [ ] **AI**: Generate GitHub Actions workflow files
+- [ ] **AI**: Create environment configuration templates (.env.example)
+- [ ] **AI**: Generate AWS setup documentation
+
+**M2: Common Components Development**
+- [ ] **AI**: Define REST API specification (OpenAPI/Swagger)
+- [ ] **AI**: Generate request/response models and JSON schemas
+- [ ] **AI**: Implement validation utilities (email, password strength, sanitization)
+- [ ] **AI**: Implement password hashing utilities (bcrypt)
+- [ ] **AI**: Implement JWT utilities (generation, validation, refresh)
+- [ ] **AI**: Implement secure token generation
+- [ ] **AI**: Create error handling framework
+- [ ] **AI**: Create logging utilities
+- [ ] **AI**: Write unit tests for all utilities
+
+**M3: AWS DynamoDB Schema & Lambda Scaffolding**
+- [ ] **AI**: Design DynamoDB table schemas
+- [ ] **AI**: Generate CloudFormation/Terraform templates for tables
+- [ ] **AI**: Create Lambda function scaffolding for all endpoints
+- [ ] **AI**: Create shared Lambda layer with utilities
+- [ ] **AI**: Generate API Gateway configuration
+- [ ] **AI**: Configure CORS and request validation
+
+**M4-M6: Authentication Flows**
+- [ ] **AI**: Implement all Lambda functions (signup, confirm, login, logout, forgot-password, reset-password)
+- [ ] **AI**: Create email templates (HTML)
+- [ ] **AI**: Implement email sending utilities
+- [ ] **AI**: Implement rate limiting logic
+- [ ] **AI**: Write unit and integration tests
+
+**M7: Security Hardening, Logging & Monitoring**
+- [ ] **AI**: Implement comprehensive logging
+- [ ] **AI**: Configure CloudWatch Metrics and Alarms
+- [ ] **AI**: Implement rate limiting for all endpoints
+- [ ] **AI**: Generate security audit checklist
+- [ ] **AI**: Document security controls
+
+**M8: Testing**
+- [ ] **AI**: Write comprehensive unit tests (>80% coverage)
+- [ ] **AI**: Write integration tests
+- [ ] **AI**: Write security tests
+- [ ] **AI**: Generate test documentation
+
+**M9: Frontend Integration & E2E Testing**
+- [ ] **AI**: Create frontend pages (signup, login, confirm, forgot-password, reset-password)
+- [ ] **AI**: Implement API integration
+- [ ] **AI**: Implement authenticated state management
+- [ ] **AI**: Write E2E tests (Playwright/Cypress)
+
+**M10: Documentation & Production Deployment**
+- [ ] **AI**: Write API documentation
+- [ ] **AI**: Write deployment documentation
+- [ ] **AI**: Write operational documentation
+- [ ] **AI**: Write user documentation
+- [ ] **AI**: Create README.md with architecture diagrams
+- [ ] **AI**: Generate deployment scripts
+- [ ] **AI**: Create runbook for common operations
+
+### 2.3 Collaborative Tasks (USER + AI)
+
+- [ ] **BOTH**: Review and refine API design
+- [ ] **BOTH**: Review security configurations
+- [ ] **BOTH**: Test authentication flows end-to-end
+- [ ] **BOTH**: Troubleshoot deployment issues
+- [ ] **BOTH**: Review and approve production deployment
+
+## 3. Roles & Responsibilities
 | Role         | Name         | Responsibilities                                         |
 |--------------|--------------|----------------------------------------------------------|
-| Product Owner| [Name]       | Prioritize features, approve design, review acceptance. |
-| Tech Lead    | [Name]       | Define architecture, ensure quality, supervise development. |
-| Backend Dev  | [Name]       | Implement API endpoints, business logic, data layer.    |
-| Frontend Dev | [Name]       | Integrate login/signup flows in UI, call APIs.         |
-| QA/Test Eng. | [Name]       | Write and execute test cases, validate flows.           |
-| DevOps/Infra | [Name]       | Setup backend infra, CI/CD, email service, social provider setup. |
+| Product Owner| John Boen    | Prioritize features, approve design, review acceptance. |
+| Tech Lead    | John Boen    | Define architecture, ensure quality, supervise development. |
+| Backend Dev  | AI Agent     | Implement API endpoints, business logic, data layer.    |
+| Frontend Dev | AI Agent     | Integrate login/signup flows in UI, call APIs.         |
+| QA/Test Eng. | AI Agent     | Write and execute test cases, validate flows.           |
+| DevOps/Infra | John Boen + AI | Setup backend infra, CI/CD, email service, social provider setup. |
 
-## 3. Milestones & Timeline
+## 4. Milestones & Timeline
 
 ### Phase 1: AWS Email/Password Implementation (Primary Path)
 | Milestone # | Description                                                  | Duration | Target    |
@@ -119,11 +328,11 @@ This phased approach allows for incremental delivery, with common components bui
 
 **Phase 3 Total Duration**: 8 weeks
 
-## 4. Detailed Task Breakdown
+## 5. Detailed Task Breakdown
 
 ### PHASE 1: AWS Email/Password Implementation
 
-#### 4.1 Environment & AWS Infrastructure Setup (M1 - Week 1)
+#### 5.1 Environment & AWS Infrastructure Setup (M1 - Week 1)
 **Tasks:**
 - [ ] Create GitHub repository with folder structure:
   - `/infrastructure` - CloudFormation/Terraform templates
@@ -149,7 +358,7 @@ This phased approach allows for incremental delivery, with common components bui
 - CI/CD pipeline skeleton
 - Local development environment ready
 
-#### 4.2 Common Components Development (M2 - Week 2)
+#### 5.2 Common Components Development (M2 - Week 2)
 **Tasks:**
 - [ ] Define REST API specification (OpenAPI/Swagger)
 - [ ] Create request/response models and JSON schemas
@@ -172,7 +381,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Reusable utility modules
 - Unit tests for common components
 
-#### 4.3 AWS DynamoDB Schema & Lambda Scaffolding (M3 - Week 3)
+#### 5.3 AWS DynamoDB Schema & Lambda Scaffolding (M3 - Week 3)
 **Tasks:**
 - [ ] Design DynamoDB table schemas:
   - Users table with email GSI
@@ -202,7 +411,7 @@ This phased approach allows for incremental delivery, with common components bui
 - API Gateway configuration
 - Development environment deployed
 
-#### 4.4 Email/Password Signup & Confirmation Flow (M4 - Week 4)
+#### 5.4 Email/Password Signup & Confirmation Flow (M4 - Week 4)
 **Tasks:**
 - [ ] Implement `POST /api/auth/signup` Lambda function:
   - Validate input (email, password, displayName)
@@ -240,7 +449,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Email templates created
 - Tests passing
 
-#### 4.5 Login, JWT/Session Management, Logout (M5 - Week 5)
+#### 5.5 Login, JWT/Session Management, Logout (M5 - Week 5)
 **Tasks:**
 - [ ] Implement `POST /api/auth/login` Lambda function:
   - Validate input (email, password)
@@ -279,7 +488,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Rate limiting implemented
 - Tests passing
 
-#### 4.6 Forgot Password / Reset Flow (M6 - Week 6)
+#### 5.6 Forgot Password / Reset Flow (M6 - Week 6)
 **Tasks:**
 - [ ] Implement `POST /api/auth/forgot-password` Lambda function:
   - Validate email input
@@ -313,7 +522,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Password reset email templates created
 - Tests passing
 
-#### 4.7 Security Hardening, Logging & Monitoring (M7 - Week 7)
+#### 5.7 Security Hardening, Logging & Monitoring (M7 - Week 7)
 **Tasks:**
 - [ ] Implement comprehensive logging:
   - All authentication events logged to AuthenticationEvents table
@@ -351,7 +560,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Rate limiting on all endpoints
 - Security audit completed
 
-#### 4.8 Testing (M8 - Week 8)
+#### 5.8 Testing (M8 - Week 8)
 **Tasks:**
 - [ ] Write comprehensive unit tests:
   - All Lambda functions
@@ -387,7 +596,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Performance test results
 - Security test results
 
-#### 4.9 Frontend Integration & E2E Testing (M9 - Week 9)
+#### 5.9 Frontend Integration & E2E Testing (M9 - Week 9)
 **Tasks:**
 - [ ] Create frontend signup page:
   - Email/password form
@@ -432,7 +641,7 @@ This phased approach allows for incremental delivery, with common components bui
 - E2E tests passing
 - Cross-browser testing completed
 
-#### 4.10 Documentation & Production Deployment (M10 - Week 10)
+#### 5.10 Documentation & Production Deployment (M10 - Week 10)
 **Tasks:**
 - [ ] Write API documentation:
   - Endpoint descriptions
@@ -486,7 +695,7 @@ This phased approach allows for incremental delivery, with common components bui
 
 ### PHASE 2: Social Login Integration (Future)
 
-#### 4.11 OAuth Provider Setup (M11)
+#### 5.11 OAuth Provider Setup (M11)
 **Tasks:**
 - [ ] Register OAuth apps with Google, Facebook, LinkedIn
 - [ ] Obtain client IDs and secrets
@@ -494,14 +703,14 @@ This phased approach allows for incremental delivery, with common components bui
 - [ ] Store credentials in Secrets Manager
 - [ ] Document OAuth setup process
 
-#### 4.12 Social Login Implementation (M12)
+#### 5.12 Social Login Implementation (M12)
 **Tasks:**
 - [ ] Implement OAuth callback Lambda functions
 - [ ] Implement account linking logic
 - [ ] Update frontend with social login buttons
 - [ ] Test social login flows
 
-#### 4.13 Social Login Testing (M13)
+#### 5.13 Social Login Testing (M13)
 **Tasks:**
 - [ ] Write tests for social login flows
 - [ ] Test account linking scenarios
@@ -511,26 +720,26 @@ This phased approach allows for incremental delivery, with common components bui
 
 ### PHASE 3: Additional Backend Implementations (Future)
 
-#### 4.14 Repository Abstraction Layer (M14)
+#### 5.14 Repository Abstraction Layer (M14)
 **Tasks:**
 - [ ] Define repository interfaces
 - [ ] Extract AWS-specific code into repository implementation
 - [ ] Create backend selector configuration
 
-#### 4.15-4.18 Backend Implementations (M15-M18)
+#### 5.15-5.18 Backend Implementations (M15-M18)
 **Tasks for each backend:**
 - [ ] Setup backend infrastructure
 - [ ] Implement repository interfaces
 - [ ] Write backend-specific tests
 - [ ] Document backend configuration
 
-#### 4.19 Cross-Backend Testing (M19)
+#### 5.19 Cross-Backend Testing (M19)
 **Tasks:**
 - [ ] Run same test suite against all backends
 - [ ] Verify identical behavior
 - [ ] Document backend switching procedure
 
-## 5. Dependencies
+## 6. Dependencies
 
 ### Phase 1 Dependencies
 - **AWS Account**: Active AWS account with billing enabled
@@ -556,7 +765,7 @@ This phased approach allows for incremental delivery, with common components bui
 - Supabase account
 - Back4App account
 
-## 6. Risks & Mitigation
+## 7. Risks & Mitigation
 
 ### Phase 1 Risks
 | Risk                                              | Likelihood | Impact | Mitigation                              |
@@ -582,7 +791,7 @@ This phased approach allows for incremental delivery, with common components bui
 | Complexity of supporting 5 backends increases dev time | High       | Medium | Implement one backend fully first, then replicate pattern. |
 | Backend-specific limitations                      | Medium     | Medium | Research each backend's capabilities early, design for lowest common denominator. |
 
-## 7. Metrics & Success Monitoring
+## 8. Metrics & Success Monitoring
 - Number of successful signups/confirmations.
 - Login success vs failures.
 - Number of password resets.
@@ -591,13 +800,13 @@ This phased approach allows for incremental delivery, with common components bui
 - System error rate (API errors).
 - Response times for auth endpoints (<200 ms target).
 
-## 8. Communication Plan
+## 9. Communication Plan
 - Weekly stand-up meeting (Mon 09:00).
 - Milestone review at end of every sprint/phase.
 - Slack channel for real-time issues.
 - Stakeholder update email after each major milestone.
 
-## 9. Budget & Resource Estimate
+## 10. Budget & Resource Estimate
 - Primary resources: 2 backend devs, 1 frontend dev, 1 QA, 0.5 DevOps.
 - Estimated effort: ~10 weeks (see milestones) ≈ 400-450 person-hours.
 - Infrastructure cost: for “few hundred transactions/day” expect free tiers; budget for email service and domain/SSL only ~$50/month.

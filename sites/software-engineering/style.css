@@ -54,6 +54,45 @@ body {
   margin-bottom: var(--space-4);
 }
 
+/* NEW — Detail Blocks for What/Why/Experience */
+.detail-block {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.detail-block h4 {
+  color: var(--color-accent-primary);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-3);
+}
+
+.detail-block p {
+  margin-bottom: var(--space-3);
+  line-height: var(--line-height-relaxed);
+}
+
+/* NEW — How It Fits Together Box */
+.unity-box {
+  background: var(--color-bg-secondary);
+  border-left: 4px solid var(--color-accent-primary);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-12);
+}
+
+.unity-box h3 {
+  margin-bottom: var(--space-4);
+  color: var(--color-accent-primary);
+}
+
+.unity-box p {
+  margin-bottom: var(--space-3);
+}
+
 /* Image Placeholders */
 .image-placeholder {
   background-color: var(--color-bg-secondary);
@@ -227,4 +266,3 @@ body {
     align-items: flex-start;
   }
 }
-

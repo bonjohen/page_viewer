@@ -10,66 +10,259 @@
 </head>
 <body>
   <div class="container stack">
+
     <!-- Page Header -->
     <header class="page-header">
       <h1>Software Engineering</h1>
       <p class="subtitle">Building Intelligent Systems and Data Solutions</p>
     </header>
 
-    <!-- About This Section -->
+    <!-- About Section -->
     <section class="content-section">
       <h2>About This: Software Engineering</h2>
       <p>
-        This section encompasses my work in software engineering, with a focus on AI/ML systems,
-        data engineering, and database architecture. From building agentic AI systems to designing
-        robust data pipelines and optimizing database performance, this is where code meets data.
-      </p>
-      <p>
-        The projects here span the full data lifecycle: from collection and storage through
-        processing and analysis to presentation and quality assurance. Each subsection explores
-        a different aspect of modern software and data engineering.
+        This section showcases my work across software, data, and AI engineering.
+        It highlights the architecture, reasoning, craftsmanship, and discipline behind
+        modern intelligent systems—from agentic AI to databases, pipelines, governance,
+        presentation, and data quality.
       </p>
     </section>
 
-    <!-- Subsections Overview -->
+    <!-- Subsections -->
     <section class="content-section">
       <h2>Subsections</h2>
       <div class="focus-grid">
-        <div class="focus-card clickable-card" data-site-id="ai-engineering-journey">
-          <h3>AI Engineering Journey</h3>
-          <p>Agentic AI architectures and experiments</p>
-        </div>
+
+        <!-- DATABASE ENGINEERING -->
         <div class="focus-card clickable-card" data-site-id="database-engineering">
           <h3>Database Engineering</h3>
           <p>Database design, optimization, and architecture</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              Database engineering is the craft of deciding how data lives: how it's modeled, stored, indexed, and accessed.
+              It's about designing schemas, tuning queries, aligning OLTP and analytics needs, and ensuring systems stay fast
+              and reliable even as data grows.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              If a system is a city, the database is the infrastructure under the streets. Good database engineering reduces
+              latency, improves reliability, avoids outages, and creates a solid foundation for analytics, pipelines, and AI.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>
+              I started my software career in databases and never left. I've handled:
+            </p>
+            <ul>
+              <li>Schema and model design for business-critical systems.</li>
+              <li>Performance tuning, lock analysis, and query optimization.</li>
+              <li>Migrations and refactors under real traffic constraints.</li>
+              <li>High-reliability systems where correctness and uptime matter most.</li>
+            </ul>
+            <p><br>
+              Everything else I do in the data stack builds on this foundation.
+            </p>
+          </div>
         </div>
+
+        <!-- DATA ENGINEERING -->
         <div class="focus-card clickable-card" data-site-id="data-engineering">
           <h3>Data Engineering</h3>
           <p>Building robust data pipelines</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              Data engineering builds the ingestion, transformation, and delivery pipelines that move data through an organization.
+              It includes ETL/ELT, batch and streaming flows, orchestration, and structured data layers.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              Without dependable pipelines, analysts, ML engineers, and AI systems waste time fixing broken data rather than using it.
+              Data engineering makes information usable, consistent, and timely.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>I have built:</p>
+            <ul>
+              <li>ETL/ELT pipelines powering analytics and ML systems.</li>
+              <li>Large data migrations with safe cutovers and backfills.</li>
+              <li>Operational pipelines balancing latency, cost, and correctness.</li>
+              <li>Lineage frameworks tracking data from source to model.</li>
+            </ul>
+            <p><br>
+              I think in terms of lineage and impact: where data came from, how it changed, who depends on it, and what happens when it breaks.
+            </p>
+          </div>
         </div>
+
+        <!-- DATA MANAGEMENT -->
         <div class="focus-card clickable-card" data-site-id="data-management">
           <h3>Data Management</h3>
           <p>Governance, security, and lifecycle</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              Data management treats data as an asset with responsibilities: governance, security, compliance, retention,
+              archival, and deletion. It ensures data is accessed appropriately and handled legally.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              Regulations such as HIPAA, GLBA, COPPA, and GDPR mean mishandling data isn't just sloppy—it's risky and expensive.
+              Governance builds trust, protects users, and prevents legal exposure.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>I've worked extensively with controlled data environments:</p>
+            <ul>
+              <li>Retention, archival, and secure deletion frameworks.</li>
+              <li>Access control and privacy boundaries.</li>
+              <li>Designing systems that remain safe, auditable, and compliant.</li>
+              <li>HIPAA, GLBA, COPPA, and GDPR alignment.</li>
+            </ul>
+            <p><br>
+              Data is our most valuable commodity, and it must be treated with care.
+            </p>
+          </div>
         </div>
-        <div class="focus-card clickable-card" data-site-id="data-presentation">
-          <h3>Data Presentation</h3>
-          <p>Visualization and communication</p>
+        <!-- AI ENGINEERING -->
+        <div class="focus-card clickable-card" data-site-id="ai-engineering-journey">
+          <h3>AI Engineering Journey</h3>
+          <p>Agentic AI architectures and experiments</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              AI engineering, especially agentic AI, is about turning large language models into working collaborators:
+              software that can reason over data, call tools, orchestrate workflows, and close the loop on real tasks.
+              It's the intersection of data engineering, software design, and human-centered systems.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              Most organizations don't need “a chatbot”; they need AI that can read their documents, call their APIs,
+              respect their permissions, and produce traceable answers. Agentic AI systems do this by chaining together
+              models, tools, and data stores. Done well, they reduce busywork, surface insights faster, and create a layer
+              of “intelligent glue” over existing systems.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>
+              I come to AI from the data side. I've spent decades building databases, ETL pipelines, data quality checks,
+              and governed data environments at companies like Boeing, Microsoft, Getty Images, Demand Media, Virtuoso,
+              and Google. Now I'm building:
+            </p>
+            <ul>
+              <li>RAG pipelines that index documents, logs, and structured data so AI can answer questions with citations.</li>
+              <li>Agentic workflows that use tools (web search, vector stores, SQL, file storage) to research, summarize, and act.</li>
+              <li>Evaluation and observability patterns treating LLMs like components in a production system, not toys.</li>
+            </ul>
+            <p><br>
+              I reuse everything I know about schema design, lineage, quality, and governance—and apply it to systems where a
+              “query plan” is now a chain of AI calls.
+            </p>
+          </div>
         </div>
+        <!-- DATA QUALITY -->
         <div class="focus-card clickable-card" data-site-id="data-quality">
           <h3>Data Quality</h3>
           <p>Accuracy, completeness, and reliability</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              Data quality is the discipline of making sure the data tells the truth—or at least, a consistent and well-understood
+              version of it. It covers validation, deduplication, anomaly detection, reconciliation between systems, and ongoing monitoring.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              Every downstream function—analytics, operations, AI, compliance—depends on trusting the data. If the numbers are wrong or
+              inconsistent, the best model, dashboard, or agent is just confidently wrong.
+              Quality engineering ensures errors are caught early, root causes are identified, and impacts are understood.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>For most of my career, “something looks wrong” has landed on my desk:</p>
+            <ul>
+              <li>Detecting and fixing broken pipelines.</li>
+              <li>Identifying missing joins and off-by-one logic.</li>
+              <li>Diagnosing mismatched time zones and schema drift.</li>
+              <li>Creating checks and alerts to catch issues before executives see them.</li>
+              <li>Resolving source-of-truth conflicts across systems.</li>
+            </ul>
+            <p><br>
+              In agentic AI systems, data quality is even more critical: if you index the wrong data or index it incorrectly,
+              the AI will confidently present garbage. My instinct is always to ask:
+              <em>“Is this data actually correct, and how do we know?”</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- DATA PRESENTATION -->
+        <div class="focus-card clickable-card" data-site-id="data-presentation">
+          <h3>Data Presentation</h3>
+          <p>Visualization and communication</p>
+
+          <div class="detail-block">
+            <h4>What It Is</h4>
+            <p>
+              Data presentation turns raw numbers into meaning: dashboards, visualizations, summaries, and narratives that drive
+              understanding and decisions.
+            </p>
+
+            <h4>Why It's Valuable</h4>
+            <p>
+              Even the best datasets are useless if no one understands them. Good presentation bridges the gap between data and decision,
+              tailoring insights to stakeholders.
+            </p>
+
+            <h4>My Experience</h4>
+            <p>
+              I've built executive dashboards, analytical reports, and operational monitoring systems. I focus on clarity, accuracy,
+              and narrative framing so people can act decisively and confidently.
+            </p>
+            <p><br>
+              Without a good data presentation layer, all the data in the world is just noise.
+            </p>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- HOW IT ALL FITS TOGETHER -->
+    <section class="unity-box">
+      <h3>How It All Fits Together</h3>
+      <p>
+        Across all of these roles—database engineering, data engineering, data management,
+        data presentation, and data quality—the theme is simple:
+      </p>
+      <p><strong>I do data. End to end.</strong></p>
+      <p>
+        From schema design and ETL to governance, visual storytelling, and now agentic AI,
+        my work has always been about making information trustworthy, understandable, and
+        usable in the real world.
+      </p>
+      <p>
+        This Projects Hub is my way of breaking that long arc into clear paths, so you can explore
+        whichever slice is most relevant—whether you're a hiring manager, a fellow engineer,
+        or someone trying to understand how data and AI can actually help your organization, I hope this is valuable.
+      </p>
+    </section>
+
   </div>
 
   <script>
-    // Make subsection cards clickable
     document.querySelectorAll('.clickable-card').forEach(card => {
       card.addEventListener('click', () => {
         const siteId = card.getAttribute('data-site-id');
         if (siteId && window.parent) {
-          // Send message to parent window to navigate
           window.parent.postMessage({ type: 'navigate', siteId: siteId }, '*');
         }
       });
@@ -77,4 +270,3 @@
   </script>
 </body>
 </html>
-
