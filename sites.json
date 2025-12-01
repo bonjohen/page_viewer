@@ -55,6 +55,17 @@
           "embed": true
         },
         {
+          "id": "data-science-ml",
+          "label": "Data Science/ML",
+          "description": {
+            "what_it_is": "Data science and machine learning involve extracting insights from data through statistical analysis, predictive modeling, and training algorithms to recognize patterns, make predictions, and automate decision-making. This includes feature engineering, model training, evaluation, deployment, and monitoring.",
+            "why_it_is_valuable": "Data science transforms historical data into actionable predictions and insights. ML models can automate complex decisions, detect anomalies, personalize experiences, and uncover patterns humans might miss. Together they enable organizations to move from reactive to predictive operations.",
+            "my_experience": "I have built predictive models, classification systems, recommendation engines, and anomaly detection pipelines. My background in data engineering and quality ensures that ML systems are built on clean, reliable data. I focus on models that are explainable, maintainable, and operationally sound—not just accurate in notebooks."
+          },
+          "url": "./sites/data-science-ml/",
+          "embed": true
+        },
+        {
           "id": "data-management",
           "label": "Data Management",
           "description": {
@@ -88,7 +99,7 @@
           "embed": true
         }
       ],
-      "how_it_fits_together": "All of these roles—database engineering, data engineering, data management, data presentation, and data quality—form a unified discipline: making data trustworthy, understandable, and usable. Everything I do in AI engineering builds on these foundations. My career has been the long arc of designing, moving, securing, validating, and explaining data, and now applying that knowledge to create agentic AI systems that act responsibly over that data."
+      "how_it_fits_together": "All of these roles—database engineering, data engineering, data science/ML, data management, data presentation, and data quality—form a unified discipline: making data trustworthy, understandable, and usable. Everything I do in AI engineering builds on these foundations. My career has been the long arc of designing, moving, securing, validating, explaining, and predicting from data, and now applying that knowledge to create agentic AI systems that act responsibly over that data."
     },
     {
       "id": "martial-arts-fitness",

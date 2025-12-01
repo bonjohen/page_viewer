@@ -135,12 +135,21 @@ function createSiteElement(site) {
   const siteDiv = document.createElement('div');
   siteDiv.className = 'site-item';
   siteDiv.dataset.siteId = site.id;
-  
+
+  // Handle both string and object descriptions
+  let descriptionText = '';
+  if (typeof site.description === 'string') {
+    descriptionText = site.description;
+  } else if (typeof site.description === 'object' && site.description !== null) {
+    // For object descriptions, use what_it_is as the preview
+    descriptionText = site.description.what_it_is || '';
+  }
+
   siteDiv.innerHTML = `
     <span class="site-label">${site.label}</span>
-    <span class="site-description">${site.description}</span>
+    <span class="site-description">${descriptionText}</span>
   `;
-  
+
   siteDiv.addEventListener('click', () => {
     loadSite(site.id);
     closeMobileSidebar();
