@@ -21,18 +21,6 @@
       "url": "./sites/software-engineering/",
       "sites": [
         {
-          "id": "ai-engineering-journey",
-          "label": "AI Engineering Journey",
-          "description": {
-            "what_it_is": "Agentic AI engineering focuses on building systems where large language models coordinate tools, reason over data, and complete tasks end-to-end. This includes RAG pipelines, tool-calling, workflow orchestration, evaluation loops, and building AI that behaves like a collaborator rather than a passive model.",
-            "why_it_is_valuable": "Organizations don't need chatbots—they need AI that acts responsibly on their data, respects permissions, calls APIs, summarizes documents, and automates repetitive workflows. Agentic architectures create an ‘intelligent glue layer' across existing systems, improving speed, consistency, and decision-making.",
-            "my_experience": "I bring decades of database, data engineering, data governance, and operational experience from Boeing, Microsoft, Getty Images, Demand Media, Virtuoso, and Google. I design RAG systems, agent workflows, vector retrieval layers, and pipelines that guarantee traceability and correctness. My background ensures AI systems are grounded in real data, not guesswork."
-          },
-          "url": "./sites/ai-agentic/",
-          "embed": true,
-          "default": true
-        },
-        {
           "id": "database-engineering",
           "label": "Database Engineering",
           "description": {
@@ -77,15 +65,16 @@
           "embed": true
         },
         {
-          "id": "data-presentation",
-          "label": "Data Presentation",
+          "id": "ai-engineering-journey",
+          "label": "AI Engineering Journey",
           "description": {
-            "what_it_is": "The practice of transforming complex data into dashboards, visualizations, summaries, and narratives that help people make decisions.",
-            "why_it_is_valuable": "Good presentation bridges the gap between raw facts and understanding. It guides decision-makers, reduces confusion, and ensures the right people see the right insights at the right time.",
-            "my_experience": "I've created dashboards, operational reports, and executive-level narratives that distill complex datasets into actionable insights. I focus on clarity, accuracy, and respecting the audience's needs—whether technical or non-technical."
+            "what_it_is": "Agentic AI engineering focuses on building systems where large language models coordinate tools, reason over data, and complete tasks end-to-end. This includes RAG pipelines, tool-calling, workflow orchestration, evaluation loops, and building AI that behaves like a collaborator rather than a passive model.",
+            "why_it_is_valuable": "Organizations don't need chatbots—they need AI that acts responsibly on their data, respects permissions, calls APIs, summarizes documents, and automates repetitive workflows. Agentic architectures create an ‘intelligent glue layer' across existing systems, improving speed, consistency, and decision-making.",
+            "my_experience": "I bring decades of database, data engineering, data governance, and operational experience from Boeing, Microsoft, Getty Images, Demand Media, Virtuoso, and Google. I design RAG systems, agent workflows, vector retrieval layers, and pipelines that guarantee traceability and correctness. My background ensures AI systems are grounded in real data, not guesswork."
           },
-          "url": "./sites/data-presentation/",
-          "embed": true
+          "url": "./sites/ai-agentic/",
+          "embed": true,
+          "default": true
         },
         {
           "id": "data-quality",
@@ -96,6 +85,17 @@
             "my_experience": "Throughout my career I have diagnosed and repaired bad pipelines, schema mismatches, off-by-one logic, timezone issues, broken joins, and source-of-truth conflicts. I design monitoring systems that detect issues early and guarantee trustworthiness."
           },
           "url": "./sites/data-quality/",
+          "embed": true
+        },
+        {
+          "id": "data-presentation",
+          "label": "Data Presentation",
+          "description": {
+            "what_it_is": "The practice of transforming complex data into dashboards, visualizations, summaries, and narratives that help people make decisions.",
+            "why_it_is_valuable": "Good presentation bridges the gap between raw facts and understanding. It guides decision-makers, reduces confusion, and ensures the right people see the right insights at the right time.",
+            "my_experience": "I've created dashboards, operational reports, and executive-level narratives that distill complex datasets into actionable insights. I focus on clarity, accuracy, and respecting the audience's needs—whether technical or non-technical."
+          },
+          "url": "./sites/data-presentation/",
           "embed": true
         }
       ],
