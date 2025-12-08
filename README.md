@@ -31,6 +31,7 @@ A config-driven, static web hub for organizing and showcasing personal projects 
 │   │   ├── ai-agentic/
 │   │   ├── database-engineering/
 │   │   ├── data-engineering/
+│   │   ├── data-science-ml/
 │   │   ├── data-management/
 │   │   ├── data-presentation/
 │   │   └── data-quality/
@@ -57,17 +58,22 @@ A config-driven, static web hub for organizing and showcasing personal projects 
 
 2. Start a local HTTP server:
    ```bash
-   # Python 3
+   # Python 3 (Recommended - binds to localhost only for security)
+   python -m http.server 8000 --bind 127.0.0.1
+
+   # Python 3 (Alternative - accessible from network)
    python -m http.server 8000
-   
+
    # Python 2
    python -m SimpleHTTPServer 8000
-   
+
    # Node.js (with http-server)
    npx http-server -p 8000
    ```
 
 3. Open your browser to `http://localhost:8000`
+
+**Security Note**: Using `--bind 127.0.0.1` ensures the server only accepts connections from your local machine, preventing external access and potential security issues.
 
 ### GitHub Pages Deployment
 
